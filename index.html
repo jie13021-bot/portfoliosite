@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="script/script.js"></script>
+    <title>함께하는_디자이너_정지이</title>
+    <style>
+        @font-face {
+    font-family: 'NexonMaplestory';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff') format('woff');
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NexonMaplestory';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+    font-weight: 700;
+    font-display: swap;
+}
+    * { margin: 0; padding: 0; box-sizing: border-box;}
+    
+    body{
+        overflow: hidden;
+        height: 100%;
+    }
+    a{
+        text-decoration: none;
+    }
+    .box.main-page {
+            background: url('images/main.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+
+/* 1. 구름 애니메이션 정의: 위아래로 움직임 */
+@keyframes floating {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-15px); }
+}
+
+/* 2. 반짝임 애니메이션 정의: 커지면서 밝아짐 */
+@keyframes sparkling {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    100% { transform: scale(1.2); opacity: 1; }
+}
+/* 3.별 애니메이션 정의: 회전하면서 작아졌다 커졌다 */
+@keyframes rotating {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-15px) scale(1.2); }
+}
+
+
+.cloud1 { position: absolute; left: 56.25%; top: 7.8%; }
+.cloud2 { position: absolute; left: 58.85%; top: 12.2%; }
+.cloud3 { position: absolute; left: 66.66%; top: 1.1%;}
+.cloud4 { position: absolute; left: 69.27%; top: 2.7%;}
+
+/* 구름 공통 적용 (클래스별로 속도를 다르게 주면 더 자연스러워요) */
+.cloud1, .cloud2, .cloud3, .cloud4, .game, .music1, .music2, .music3 {
+    animation: floating infinite alternate ease-in-out;}
+
+.cloud1, .game { animation-duration: 2s; }
+.cloud2, .music1{ animation-duration: 3s; animation-delay: 0.2s; }
+.cloud3, .music2 { animation-duration: 2.5s; animation-delay: 0.5s; }
+.cloud4, .music3 { animation-duration: 3.5s; }
+
+
+.diamond1 { position: absolute; left: 54.94%; top: 2.2%; animation: sparkling 1.5s infinite alternate ease-in-out; }
+.diamond2 { position: absolute; left: 58.07%; top: 6.6%; animation: sparkling 2s infinite alternate ease-in-out 0.3s; }
+
+/* 반짝임 공통 적용 */
+.diamond1, .diamond2 {
+    animation: sparkling infinite alternate ease-in-out;}
+.diamond1 { animation-duration: 1.5s; }
+.diamond2 { animation-duration: 2s; animation-delay: 0.3s; }
+
+.game{
+    position: absolute;
+    top: 74%;
+    left: 1%;
+}
+.music1{
+    position: absolute;
+    top: 76%;
+    left: 9%;
+}
+.music2{
+    position: absolute;
+    top: 68%;
+    left: 1%;
+    z-index: 2;
+}
+.music3{
+    position: absolute;
+    top: 90%;
+    left: 1%;
+    z-index: 3;
+}
+
+.ballon{
+    position: absolute;
+    top: 58%;
+    left: 8.7%;
+    animation: floating infinite alternate ease-in-out;
+    animation-duration: 2s;
+}
+
+.dice1{
+    position: absolute;
+    left: 61.5%;
+    top: 58%;
+    z-index: 3;
+}
+.dice2 {
+    position: absolute;
+    left: 68.7%;
+    top: 56%;
+}
+.dice1, .dice2 {animation: floating infinite alternate ease-in-out;}
+.dice1{animation-duration: 2s;}
+.dice2{animation-duration: 1.5s;}
+
+
+    .star1{
+    position: absolute;
+    left: 77.3%;
+    top: 32.5%;
+}
+.star2{
+    position: absolute;
+    left: 73.7%;
+    top: 26.6%;
+}
+.star1, .star2 {animation: rotating infinite alternate ease-in-out;}
+.star1{animation-duration: 2.5s;}
+.star2{animation-duration: 2s;}
+
+    .navi{
+        position: absolute;
+        left: 1679px;
+        top: 238px;
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+    }
+    .nav>div{
+        position: relative;
+        display: flex;
+    }
+/* 1. 모든 메뉴 자식 이미지들에 부드러운 애니메이션 효과 설정 */
+.navi > div img {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+}
+
+/* 2. 어떤 메뉴든 마우스를 올리면 이미지가 1.2배 커짐 */
+.navi > div:hover img {
+    transform: scale(1.2);
+}
+
+
+
+/* 부모 index.html의 CSS */
+.container {
+    display: flex; /* 자식들을 가로로 나열 */
+    height: 100vh;
+    transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform;
+}
+
+.box {
+    flex: 0 0 100vw; /* 중요: 각 칸이 정확히 화면 너비 100%를 유지 */
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+    border: 0;
+    display: block;
+}
+
+
+.menu-wrap{
+    position: relative;
+    display: inline-block;
+}
+
+/* 메뉴 버튼 */
+.menu-btn img{
+    display: block;
+}
+
+/* 왼쪽 패널 */
+.menu-panel{
+    position: absolute;
+    right: 65px;              /* ← 메뉴의 왼쪽 */
+    top: -220px;
+    width: 270px;
+    padding: 15px 10px;
+    background: rgba(247, 247, 208, 0.95);
+    border: #000 2px solid;
+    border-radius: 20px;
+    opacity: 0;
+    transform: translateX(20px);  /* 살짝 안쪽에 숨김 */
+    pointer-events: none;
+    transition: opacity 0.25s ease 0.12s, transform 0.25s ease 0.12s;
+}
+
+.menu-wrap:hover .menu-panel{
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+
+  transition: opacity 0.25s ease 0s, transform 0.25s ease 0s;
+}
+.menu-wrap::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 100%;
+  width: 16px;
+  height: 100%;
+  background: transparent;
+}
+
+/* 서브메뉴 스타일 */
+.menu-panel ul{
+    list-style: none;
+}
+
+.menu-panel li{
+    margin: 0;
+}
+.menu-panel .line{
+    display: flex;      /* 줄바꿈 핵심 */
+    line-height: 1.3;
+}
+.menu-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* ← li li */
+  gap: 4px 10px;  /* 세로 / 가로 간격 */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-grid li a{
+  display: block;
+  padding: 10px 5px;
+  text-align: left;
+  border-radius: 10px;
+    color: #000;
+    font-size: 16px;
+    font-family: 'NexonMaplestory';
+    background: rgba(255,255,255,0.06);
+  transition: background 0.2s ease, transform 0.2s ease
+}
+
+.menu-grid li a:hover{
+    color: #F35695;
+    transform: translateY(-1px)
+}
+
+#mask{
+  position: fixed;
+  inset: 0;                 /* top:0; right:0; bottom:0; left:0; */
+  z-index: 9999;
+  background: rgba(255,255,255,0);
+  backdrop-filter: blur(0.3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+#mask.on{
+  opacity: 1;
+}
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="box main-page">
+            <div class="cloud1"><img src="images/좌측구름.png" alt="구름"></div>
+            <div class="cloud2"><img src="images/우측구름 (2).png" alt="구름"></div>
+            <div class="cloud3"><img src="images/작뒤.png" alt="구름"></div>
+            <div class="cloud4"><img src="images/더작뒤.png" alt="구름"></div>
+            <div class="diamond1"><img src="images/Asset 17.png" alt="반짝임"></div>
+            <div class="diamond2"><img src="images/Asset 18.png" alt="반짝임"></div>
+            <div class="music1"><img src="images/Asset 14.png" alt="음표"></div>
+            <div class="music2"><img src="images/Asset 15.png" alt="음표"></div>
+            <div class="music3"><img src="images/Asset 16.png" alt="음표"></div>
+            <div class="game"><img src="images/Asset 13.png" alt="게임기"></div>
+            <div class="ballon"><img src="images/Asset 12.png" alt="열기구"></div>
+            <div class="dice1"><img src="images/Asset 9.png" alt="주사위"></div>
+            <div class="dice2"><img src="images/Asset 11.png" alt="주사위"></div>
+            <div class="star1"><img src="images/star1.png" alt="별"></div>
+            <div class="star2"><img src="images/star2.png" alt="별"></div>
+            
+            <div class="navi">
+                <div class="aboutme">
+                    <a href="sub.html" data-go="6"><img class="normal" src="images/Asset 22.png" alt="자기소개"></a>
+                </div>
+                <div class="portfolio">
+                    <a href="portfolio.html" data-go="1"><img class="normal" src="images/Asset 23.png" alt="포트폴리오"></a>
+                </div>
+            
+                <div class="menu-wrap">
+                    <a href="#" class="menu-btn"><img class="normal" src="images/Asset 24.png" alt="메뉴"></a>
+                    
+                    <div class="menu-panel">
+                        <ul class="menu-grid">
+                            <li><a href="#" data-go="6">ABOUTME1</a></li>
+                            <li><a href="#" data-go="7">ABOUTME2</a></li>
+                            <li><a href="#" data-go="8">ABOUTME3</a></li>
+                            <li><a href="#" data-go="9">ABOUTME4</a></li>
+                            <li><a href="#" data-go="10">ABOUTME5</a></li>
+                            <li><a href="#" data-go="11">ABOUTME6</a></li>
+                        </ul>
+                        <ul class="menu-grid">
+                            <li><a href="#" data-go="1">PORTFOLIO1</a></li>
+                            <li><a href="#" data-go="2">PORTFOLIO2</a></li>
+                            <li><a href="#" data-go="3">PORTFOLIO3</a></li>
+                            <li><a href="#" data-go="4">PORTFOLIO4</a></li>
+                            <li><a href="#" data-go="5">PORTFOLIO5</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+            <div class="box"><iframe src="portfolio.html"></iframe></div>
+            <div class="box"><iframe src="portfolio2.html"></iframe></div>
+            <div class="box"><iframe src="portfolio3.html"></iframe></div>
+            <div class="box"><iframe src="portfolio4.html"></iframe></div>
+            <div class="box"><iframe src="portfolio5.html"></iframe></div>
+            <div class="box"><iframe src="sub.html"></iframe></div>
+            <div class="box"><iframe src="sub2.html"></iframe></div>
+            <div class="box"><iframe src="sub3.html"></iframe></div>
+            <div class="box"><iframe src="sub4.html"></iframe></div>
+            <div class="box"><iframe src="sub5.html"></iframe></div>
+            <div class="box"><iframe src="sub6.html"></iframe></div>
+            <div class="box"><iframe src="thank.html"></iframe></div>
+
+
+            <div id="mask"></div>
+</div>
+
+</body>
+</html>

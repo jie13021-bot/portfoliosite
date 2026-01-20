@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>portfolio_스투시</title>
+    <style>
+    @font-face {
+    font-family: 'NexonMaplestory';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff') format('woff');
+    font-weight: 300;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'NexonMaplestory';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+    font-weight: 700;
+    font-display: swap;
+}
+
+@keyframes floating {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-15px); }
+}
+
+/* 2. 반짝임 애니메이션 정의: 커지면서 밝아짐 */
+@keyframes sparkling {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    100% { transform: scale(1.2); opacity: 1; }
+}
+/* 3.별 애니메이션 정의: 작아졌다 커졌다 */
+@keyframes rotating {
+    0% { transform: scale(0.8); }
+    100% { transform: scale(1.1); }
+}
+
+
+.cloud1 { 
+    position: absolute; 
+    left: -1%; 
+    top: 93%; animation: 
+    floating 3s infinite alternate ease-in-out;
+    z-index: 3;
+}
+.cloud2 { 
+    position: absolute; 
+    left: 1%; 
+    top: 94%; 
+    animation: floating 4s infinite alternate ease-in-out 0.2s;
+    z-index: 4;
+}
+.cloud3 { 
+    position: absolute; 
+    left: 5%; 
+    top: 89%; 
+    animation: floating 2.5s infinite alternate ease-in-out 0.3s; }
+.cloud4 { 
+    position: absolute; 
+    left: 10%; 
+    top: 95%;
+    animation: floating 4.5s infinite alternate ease-in-out; }
+.cloud5 { 
+    position: absolute; 
+    left: 36.5%; 
+    top: 78.5%; 
+    animation: floating 3s infinite alternate ease-in-out 0.3s; }
+.cloud6 { 
+    position: absolute; 
+    left: 35%; 
+    top: 81.5%; 
+    animation: floating 2.3s infinite alternate ease-in-out 0.2s; }
+
+    .air { 
+    position: absolute; 
+    left: 3%; 
+    top: 90.5%; 
+    animation: floating 3s infinite alternate ease-in-out 0.2s; 
+    z-index: 2;
+}
+.sun {
+    position: absolute;
+    left: 32.5%;
+    top: 93%;
+    animation: floating 2.5s infinite alternate ease-in-out 0.3s
+}
+.rainbow {
+    position: absolute;
+    left: 32.8%;
+    top: 90%;
+}
+.star3{
+    position: absolute;
+    left: 27%;
+    top: 79%;
+    animation: rotating infinite alternate ease-in-out 2s;
+}
+.star4{
+    position: absolute;
+    left: 31.5%;
+    top: 86%;
+    animation: rotating infinite alternate ease-in-out 2.5s;
+}
+.light1{
+    position: absolute;
+    left: 62.5%;
+    top: 88%;
+    animation: sparkling infinite alternate ease-in-out 2s;
+}
+.light2{
+    position: absolute;
+    left: 77%;
+    top: 77%;
+    animation: sparkling infinite alternate ease-in-out 1.5s;
+}
+
+
+
+    * { margin: 0; padding: 0; box-sizing: border-box;}
+    
+    body{
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+    }
+    a{
+        text-decoration: none;
+    }
+    .main {
+    background: url(images/5.스투시.jpg) no-repeat center center;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    }
+
+
+    .navi{
+        position: absolute;
+        left: 1830px;
+        top: 105px;
+        display: flex;
+        flex-direction: column;
+        gap: 19px;
+    }
+
+    .arrows{
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        top: 290px;
+    }
+    .arrows>a:nth-child(2){
+        position: absolute;
+        display: flex;
+        top: 42px;
+        left: 4px;
+    }
+
+    /* 1. 기본 애니메이션 설정 (모든 이미지에 부드러운 효과는 유지) */
+.navi img {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+}
+
+/* 2. .arrows가 아닌 직계 자식 a 태그에만 호버 확대 적용 */
+.navi > a:hover img {
+    transform: scale(1.2);
+}
+/* 화살표 버튼 박스 설정 */
+.arrow-btn {
+    position: relative;
+    display: block;
+    width: 50px; /* 화살표 이미지의 실제 가로 너비로 수정하세요 */
+    height: 50px; /* 화살표 이미지의 실제 세로 높이로 수정하세요 */
+}
+
+/* 화살표 내 이미지 공통 설정 */
+.arrow-btn img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: opacity 0.3s ease; /* 부드럽게 변하도록 설정 */
+}
+
+/* 호버용 이미지는 처음에 숨김 */
+.arrow-btn .on {
+    opacity: 0;
+}
+
+/* 마우스 올렸을 때 효과 */
+.arrow-btn:hover .normal {
+    opacity: 0; /* 기본 이미지는 숨김 */
+}
+.arrow-btn:hover .on {
+    opacity: 1; /* 호버 이미지는 보임 */
+}
+
+/* 화살표 묶음 간격 (기존 설정 유지) */
+.arrows {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.view {
+    position: absolute;
+    display: flex;
+    gap: 27px; /* 버튼 사이 간격 */
+    left: 1220px;
+    top: 474px;
+}
+
+.view-btn:first-child {
+    position: relative;
+    display: block;
+    width: 145px;
+    height: 38px;
+}
+.view-btn:last-child {
+    position: relative;
+    display: block;
+    width: 182px;
+    height: 39px;
+}
+
+.view-btn img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    transition: opacity 0.3s ease;
+}
+.view-btn h1{
+    position: absolute;
+    left: 15px;
+    top: 6px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #F98805;
+    font-family: 'NexonMaplestory';
+    font-size: 20px;
+    z-index: 2; 
+    pointer-events: none;
+}
+.view-btn:hover h1{
+    color: #F35695;
+    font-family: 'NexonMaplestory';
+    font-size: 20px;
+}
+.view-btn .on {
+    opacity: 0;
+}
+
+.view-btn:hover .normal {
+    opacity: 0;
+}
+
+.view-btn:hover .on {
+    opacity: 1;
+}
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="box main-page">
+            <div class="cloud1"><img src="images/좌측구름.png" alt="구름"></div>
+            <div class="cloud2"><img src="images/우측구름 (2).png" alt="구름"></div>
+            <div class="air"><img src="images/air.png" alt="비행기"></div>
+            <div class="cloud3"><img src="images/더작뒤.png" alt="구름"></div>
+            <div class="cloud4"><img src="images/더작뒤.png" alt="구름"></div>
+            <div class="cloud5"><img src="images/cloud2.png" alt="구름"></div>
+            <div class="cloud6"><img src="images/cloud1.png" alt="구름"></div>
+            <div class="sun"><img src="images/sun.png" alt="해"></div>
+            <div class="rainbow"><img src="images/rainbow.png" alt="무지개"></div>
+            <div class="star3"><img src="images/star3.png" alt="별"></div>
+            <div class="star4"><img src="images/star4.png" alt="별"></div>
+            <div class="light1"><img src="images/light1.png" alt="반짝임"></div>
+            <div class="light2"><img src="images/light2.png" alt="반짝임"></div>
+        </div>
+        <div class="view">
+            <a href="#" class="view-btn">
+                <h1>Details View</h1>
+            <img class="normal" src="images/view.png" alt="자세히보기">
+            <img class="on" src="images/viewhover.png" alt="자세히보기">
+        </a>
+        </div>
+    </div>
+    <div class="navi">
+        <a href="#" data-go="0"><img src="images/Asset 14 (2).png" alt="홈"></a>
+        <a href="#" data-go="6"><img src="images/about.png" alt="자기소개"></a>
+        <a href="#" data-go="1"><img src="images/port.png" alt="포트폴리오"></a> 
+        
+        <div class="arrows">
+        <a href="portfolio3.html" class="arrow-btn">
+            <img src="images/Asset 4.png" alt="좌화살표" class="normal">
+            <img src="images/Asset 4hover.png" alt="좌화살표_호버" class="on">
+        </a>
+        <a href="portfolio5.html" class="arrow-btn">
+            <img src="images/Asset 5.png" alt="우화살표" class="normal">
+            <img src="images/Asset 5hover.png" alt="우화살표_호버" class="on">
+        </a>
+    </div>
+    </div>
+    <script>
+        const isFramed = window.parent && window.parent !== window;
+
+window.addEventListener("wheel", function(e){
+  if (!isFramed) return;          // iframe 아닐 때는 그냥 둠
+  e.preventDefault();
+  window.parent.postMessage({ type: "WHEEL", deltaY: e.deltaY }, "*");
+}, { passive: false });
+
+document.addEventListener("click", function(e){
+  const a = e.target.closest("a[data-go]");
+  if (!a) return;
+  e.preventDefault();
+
+  if (isFramed) window.parent.postMessage({ type: "GO", idx: a.dataset.go }, "*");
+  else console.log("GO:", a.dataset.go); // 단독 실행 시 확인용
+});
+
+// ✅ wheel → 부모로 전달 (가로 넘김 유지)
+window.addEventListener("wheel", function(e){
+  e.preventDefault();
+  window.parent.postMessage({ type: "WHEEL", deltaY: e.deltaY }, "*");
+}, { passive: false });
+
+// ✅ 클릭(data-go) → 부모로 전달 (버튼 클릭 이동)
+document.addEventListener("click", function(e){
+  const a = e.target.closest("a[data-go]");
+  if (!a) return;
+  e.preventDefault();
+  window.parent.postMessage({ type: "GO", idx: a.dataset.go }, "*");
+});
+</script>
+
+
+</body>
+</html>

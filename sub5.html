@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>portfolio_포포로드</title>
+    <style>
+    @font-face {
+    font-family: 'NexonMaplestory';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff') format('woff');
+    font-weight: 300;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'NexonMaplestory';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+    font-weight: 700;
+    font-display: swap;
+}
+
+@keyframes floating {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-15px); }
+}
+
+/* 2. 반짝임 애니메이션 정의: 커지면서 밝아짐 */
+@keyframes sparkling {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    100% { transform: scale(1.2); opacity: 1; }
+}
+@keyframes rotate {
+from { transform: rotate(0deg); }
+to   { transform: rotate(360deg); }
+}
+
+.camera { 
+    position: absolute; 
+    left: 10%; 
+    top: 4%; animation: 
+    floating 3s infinite alternate ease-in-out;
+    z-index: 1.5;
+}
+.cat { 
+    position: absolute; 
+    left: 14.5%; 
+    top: 3.5%; animation: 
+    floating 2.2s infinite alternate ease-in-out;
+    z-index: 3;
+}
+.draw { 
+    position: absolute; 
+    left: 19.3%; 
+    top: 3%; animation: 
+    floating 2.6s infinite alternate ease-in-out;
+    z-index: 3;
+}
+
+.dice3 { 
+    position: absolute; 
+    left: 92%; 
+    top: 83%; 
+    animation: rotate 7.5s linear infinite;
+    z-index: 1;
+}
+.dice4 { 
+    position: absolute; 
+    left: 95%; 
+    top: 79%; 
+    animation: rotate 6s linear infinite;
+}
+    * { margin: 0; padding: 0; box-sizing: border-box;}
+    
+    body{
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+    }
+    a{
+        text-decoration: none;
+    }
+    .main {
+    background: url(images/11.자소서4.jpg) no-repeat center center;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    }
+
+
+    .navi{
+        position: absolute;
+        left: 1835px;
+        top: 160px;
+        display: flex;
+        flex-direction: column;
+        gap: 19px;
+    }
+    .nav>div{
+        position: relative;
+        display: flex;
+    }
+    .arrows{
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        top: 270px;
+        right: 2px;
+    }
+    .arrows>a:nth-child(2){
+        position: absolute;
+        display: flex;
+        top: 42px;
+        left: 4px;
+    }
+
+    /* 1. 기본 애니메이션 설정 (모든 이미지에 부드러운 효과는 유지) */
+.navi img {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+}
+
+/* 2. .arrows가 아닌 직계 자식 a 태그에만 호버 확대 적용 */
+.navi > a:hover img {
+    transform: scale(1.2);
+}
+/* 화살표 버튼 박스 설정 */
+.arrow-btn {
+    position: relative;
+    display: block;
+    width: 50px; /* 화살표 이미지의 실제 가로 너비로 수정하세요 */
+    height: 50px; /* 화살표 이미지의 실제 세로 높이로 수정하세요 */
+}
+
+/* 화살표 내 이미지 공통 설정 */
+.arrow-btn img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: opacity 0.3s ease; /* 부드럽게 변하도록 설정 */
+}
+
+/* 호버용 이미지는 처음에 숨김 */
+.arrow-btn .on {
+    opacity: 0;
+}
+
+/* 마우스 올렸을 때 효과 */
+.arrow-btn:hover .normal {
+    opacity: 0; /* 기본 이미지는 숨김 */
+}
+.arrow-btn:hover .on {
+    opacity: 1; /* 호버 이미지는 보임 */
+}
+
+/* 화살표 묶음 간격 (기존 설정 유지) */
+.arrows {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+}
+.dot{
+    margin-top: 92px;
+    margin-left: 8px;
+}
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="camera"><img src="images/camera.png" alt="사진"></div>
+            <div class="cat"><img src="images/cat.png" alt="사진"></div>
+            <div class="draw"><img src="images/draw.png" alt="연필"></div>
+            <div class="dice3"><img src="images/dice3.png" alt="주사위"></div>
+            <div class="dice4"><img src="images/dice4.png" alt="주사위"></div>
+    </div>
+    <div class="navi">
+        <a href="#" data-go="0"><img src="images/Asset 14 (2).png" alt="홈"></a>
+        <a href="#" data-go="6"><img src="images/about.png" alt="자기소개"></a>
+        <a href="#" data-go="1"><img src="images/port.png" alt="포트폴리오"></a>
+        
+        <div class="arrows">
+        <a href="sub4.html" class="arrow-btn">
+            <img src="images/Asset 4.png" alt="좌화살표" class="normal">
+            <img src="images/Asset 4hover.png" alt="좌화살표_호버" class="on">
+        </a>
+        <a href="sub6.html" class="arrow-btn">
+            <img src="images/Asset 5.png" alt="우화살표" class="normal">
+            <img src="images/Asset 5hover.png" alt="우화살표_호버" class="on">
+        </a>
+    </div>
+    <div class="dot">
+        <img src="images/원5.png" alt="다섯번째">
+    </div>
+    </div>
+    <script>
+// ✅ wheel → 부모로 전달 (가로 넘김 유지)
+window.addEventListener("wheel", function(e){
+  e.preventDefault();
+  window.parent.postMessage({ type: "WHEEL", deltaY: e.deltaY }, "*");
+}, { passive: false });
+
+// ✅ 클릭(data-go) → 부모로 전달 (버튼 클릭 이동)
+document.addEventListener("click", function(e){
+  const a = e.target.closest("a[data-go]");
+  if (!a) return;
+  e.preventDefault();
+  window.parent.postMessage({ type: "GO", idx: a.dataset.go }, "*");
+});
+</script>
+
+</body>
+</html>

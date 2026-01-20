@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <title>함께하는_디자이너_정지이</title>
+    <style>
+        @font-face {
+    font-family: 'NexonMaplestory';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff') format('woff');
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NexonMaplestory';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+    font-weight: 700;
+    font-display: swap;
+}
+    * { margin: 0; padding: 0; box-sizing: border-box;}
+    
+    body{
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+    }
+    a{
+        text-decoration: none;
+    }
+    .box.main-page {
+            background: url('images/13.thankyou페이지.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+
+/* 1. 구름 애니메이션 정의: 위아래로 움직임 */
+@keyframes floating {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-15px); }
+}
+
+/* 2. 반짝임 애니메이션 정의: 커지면서 밝아짐 */
+@keyframes sparkling {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    100% { transform: scale(1.2); opacity: 1; }
+}
+/* 3.별 애니메이션 정의: 회전하면서 작아졌다 커졌다 */
+@keyframes rotating {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-15px) scale(1.2); }
+}
+
+
+.cloud1 { position: absolute; left: 56.25%; top: 7.8%; animation: floating 3s infinite alternate ease-in-out; }
+.cloud2 { position: absolute; left: 58.85%; top: 12.2%; animation: floating 4s infinite alternate ease-in-out 0.2s; }
+.cloud3 { position: absolute; left: 66.66%; top: 1.1%; animation: floating 3.5s infinite alternate ease-in-out 0.5s; }
+.cloud4 { position: absolute; left: 69.27%; top: 2.7%; animation: floating 4.5s infinite alternate ease-in-out; }
+
+/* 구름 공통 적용 (클래스별로 속도를 다르게 주면 더 자연스러워요) */
+.cloud1, .cloud2, .cloud3, .cloud4, .game, .music1, .music2, .music3 {
+    animation: floating infinite alternate ease-in-out;}
+
+.cloud1, .game { animation-duration: 2s; }
+.cloud2, .music1{ animation-duration: 3s; animation-delay: 0.2s; }
+.cloud3, .music2 { animation-duration: 2.5s; animation-delay: 0.5s; }
+.cloud4, .music3 { animation-duration: 3.5s; }
+
+
+.diamond1 { position: absolute; left: 54.94%; top: 2.2%; animation: sparkling 1.5s infinite alternate ease-in-out; }
+.diamond2 { position: absolute; left: 58.07%; top: 6.6%; animation: sparkling 2s infinite alternate ease-in-out 0.3s; }
+
+/* 반짝임 공통 적용 */
+.diamond1, .diamond2 {
+    animation: sparkling infinite alternate ease-in-out;}
+.diamond1 { animation-duration: 1.5s; }
+.diamond2 { animation-duration: 2s; animation-delay: 0.3s; }
+
+.game{
+    position: absolute;
+    top: 74%;
+    left: 1%;
+}
+.music1{
+    position: absolute;
+    top: 76%;
+    left: 9%;
+}
+.music2{
+    position: absolute;
+    top: 68%;
+    left: 1%;
+    z-index: 2;
+}
+.music3{
+    position: absolute;
+    top: 90%;
+    left: 1%;
+    z-index: 3;
+}
+
+.ballon{
+    position: absolute;
+    top: 58%;
+    left: 8.7%;
+    animation: floating infinite alternate ease-in-out;
+    animation-duration: 2s;
+}
+
+.dice1{
+    position: absolute;
+    left: 61.5%;
+    top: 58%;
+    z-index: 3;
+}
+.dice2 {
+    position: absolute;
+    left: 68.7%;
+    top: 56%;
+}
+.dice1, .dice2 {animation: floating infinite alternate ease-in-out;}
+.dice1{animation-duration: 2s;}
+.dice2{animation-duration: 1.5s;}
+
+
+    .star1{
+    position: absolute;
+    left: 77.3%;
+    top: 32.5%;
+}
+.star2{
+    position: absolute;
+    left: 73.7%;
+    top: 26.6%;
+}
+.star1, .star2 {animation: rotating infinite alternate ease-in-out;}
+.star1{animation-duration: 2.5s;}
+.star2{animation-duration: 2s;}
+
+    .navi{
+        position: absolute;
+        left: 1679px;
+        top: 238px;
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+    }
+    .nav>div{
+        position: relative;
+        display: flex;
+    }
+/* 1. 모든 메뉴 자식 이미지들에 부드러운 애니메이션 효과 설정 */
+.navi > div img {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+}
+
+/* 2. 어떤 메뉴든 마우스를 올리면 이미지가 1.2배 커짐 */
+.navi > div:hover img {
+    transform: scale(1.2);
+}
+
+
+
+.container {
+    display: flex;
+    width: 600vw; /* 6페이지이므로 600vw */
+    height: 100vh;
+    transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.box {
+    flex: 0 0 100vw; 
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+.touch-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 10; /* iframe(기본 z-index)보다 위에 오게 함 */
+    background: rgba(255, 255, 255, 0); /* 완전 투명 */
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+    </style>
+</head>
+<body>
+            <div class="container">
+    <div class="box main-page">
+            <div class="cloud1"><img src="images/좌측구름.png" alt="구름"></div>
+            <div class="cloud2"><img src="images/우측구름 (2).png" alt="구름"></div>
+            <div class="cloud3"><img src="images/작뒤.png" alt="구름"></div>
+            <div class="cloud4"><img src="images/더작뒤.png" alt="구름"></div>
+            <div class="diamond1"><img src="images/Asset 17.png" alt="반짝임"></div>
+            <div class="diamond2"><img src="images/Asset 18.png" alt="반짝임"></div>
+            <div class="music1"><img src="images/Asset 14.png" alt="음표"></div>
+            <div class="music2"><img src="images/Asset 15.png" alt="음표"></div>
+            <div class="music3"><img src="images/Asset 16.png" alt="음표"></div>
+            <div class="game"><img src="images/Asset 13.png" alt="게임기"></div>
+            <div class="ballon"><img src="images/Asset 12.png" alt="열기구"></div>
+            <div class="dice1"><img src="images/Asset 9.png" alt="주사위"></div>
+            <div class="dice2"><img src="images/Asset 11.png" alt="주사위"></div>
+            <div class="star1"><img src="images/star1.png" alt="별"></div>
+            <div class="star2"><img src="images/star2.png" alt="별"></div>
+            
+            <div class="navi">
+                <div class="home">
+                    <a href="#" data-go="0"><img src="images/Asset 14 (2).png" alt="홈"></a>
+                </div>
+                <div class="aboutme">
+                    <a href="#" data-go="6"><img src="images/about.png" alt="자기소개"></a>
+                </div>
+                <div class="portfolio">
+                    <a href="#" data-go="1"><img src="images/port.png" alt="포트폴리오"></a>
+                </div>
+            </div>
+        </div>
+        </div>
+        <script>
+// ✅ wheel → 부모로 전달 (가로 넘김 유지)
+window.addEventListener("wheel", function(e){
+  e.preventDefault();
+  window.parent.postMessage({ type: "WHEEL", deltaY: e.deltaY }, "*");
+}, { passive: false });
+
+// ✅ 클릭(data-go) → 부모로 전달 (버튼 클릭 이동)
+document.addEventListener("click", function(e){
+  const a = e.target.closest("a[data-go]");
+  if (!a) return;
+  e.preventDefault();
+  window.parent.postMessage({ type: "GO", idx: a.dataset.go }, "*");
+});
+</script>
+
+</body>
+</html>
