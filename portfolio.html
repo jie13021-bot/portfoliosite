@@ -119,11 +119,19 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box;}
     
-    body{
-        overflow: hidden;
-        width: 100%;
-        height: 100%;
-    }
+    html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.main {
+  position: fixed;   /* ✅ 핵심 */
+  inset: 0;          /* top/right/bottom/left:0 */
+  background: url(images/2.대구교육청.jpg) no-repeat center center;
+  background-size: cover;   /* 100% 100%보다 안정적 */
+}
+
     /* ✅ 팝업 열렸을 때 뒤 스크롤 잠금용 */
 html.no-scroll,
 body.no-scroll {
@@ -132,13 +140,7 @@ body.no-scroll {
     a{
         text-decoration: none;
     }
-    .main {
-    background: url(images/2.대구교육청.jpg) no-repeat center center;
-    background-size: 100% 100%;
-    width: 100%;
-    height: 100vh;
-    position: relative;
-    }
+
 
 
     .navi{
@@ -212,7 +214,8 @@ body.no-scroll {
     display: flex;
     gap: 27px; /* 버튼 사이 간격 */
     left: 1220px;
-    top: 474px;
+    top: 38%;
+  transform: translateY(calc(-50%)); 
 }
 
 .view-btn:first-child {
