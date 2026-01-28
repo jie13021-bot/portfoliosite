@@ -265,6 +265,106 @@
     opacity: 1;
 }
 
+
+.popup-dim {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 9998;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .18s ease, visibility .18s ease;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(.98);
+
+    width: min(1000px, calc(100vw - 64px));
+    height: min(780px, calc(100vh - 64px));
+
+    background: #fff;
+    z-index: 9999;
+
+    border-radius: 14px;
+    overflow-x: hidden;  
+    overflow-y: auto;   
+
+    padding: 0;
+    pointer-events: auto;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.6);
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .18s ease, visibility .18s ease, transform .18s ease;
+}
+
+.popup-dim.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* ✅ iframe을 '진짜로' 팝업 내부에 꽉 채우기 */
+#popupFrame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: #fff;
+}
+
+/* ✅ X 버튼: 배경/테두리/박스 제거 */
+.popup-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 44px;
+    height: 44px;
+
+    background: transparent;
+    /* ✅ 정사각형 배경 제거 */
+    border: 0;
+    /* ✅ 테두리 제거 */
+    border-radius: 0;
+    /* ✅ 라운드 박스 제거 */
+    box-shadow: none;
+    /* ✅ 그림자 제거 */
+
+    color: #111;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+
+    z-index: 10000;
+}
+
+.popup-close:hover {
+    opacity: 0.7;
+}
+
+.popup-close:focus {
+    outline: 2px solid rgba(0, 0, 0, 0.25);
+    outline-offset: 2px;
+}
+
+#popupImg{
+  width: 100%;
+  height: auto;         /* ✅ 이미지가 세로로 길어질 수 있게 */
+  display: block;
+  object-fit: initial;  /* ✅ contain/cover 사용 안 함 */
+}
+
     </style>
 </head>
 <body>
@@ -285,16 +385,16 @@
             <div class="light2"><img src="images/light2.png" alt="반짝임"></div>
         </div>
         <div class="view">
-            <a href="#" class="view-btn">
+            <a href="https://www.figma.com/proto/gvKTZwOYcuYQWIRCQVLwMl/20251128_%EB%AA%A8%EB%B0%94%EC%9D%BC%EB%94%94%EC%9E%90%EC%9D%B8-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85-_%EC%A0%95%EC%A7%80%EC%9D%B4?node-id=405-1210&p=f&t=g1mXULxnKEzcxQOa-1&scaling=scale-down&content-scaling=fixed&page-id=33%3A26" class="view-btn" target="_blank">
                 <h1>Proto Type</h1>
             <img class="normal" src="images/proto.png" alt="프로토타입보러가기">
             <img class="on" src="images/protohover.png" alt="프로토타입보러가기">
             </a>
-            <a href="#" class="view-btn">
-                <h1>Details View</h1>
-            <img class="normal" src="images/view.png" alt="자세히보기">
-            <img class="on" src="images/viewhover.png" alt="자세히보기">
-        </a>
+            <a href="#" class="view-btn" data-popup="images/more05.jpg">
+  <h1>Details View</h1>
+  <img class="normal" src="images/view.png" alt="자세히보기">
+  <img class="on" src="images/viewhover.png" alt="자세히보기">
+</a>
         </div>
     </div>
     <div class="navi">
@@ -303,48 +403,110 @@
         <a href="#" data-go="1"><img src="images/port.png" alt="포트폴리오"></a>
         
         <div class="arrows">
-        <a href="portfolio4.html" class="arrow-btn">
-            <img src="images/Asset 4.png" alt="좌화살표" class="normal">
-            <img src="images/Asset 4hover.png" alt="좌화살표_호버" class="on">
-        </a>
-        <a href="sub.html" class="arrow-btn">
-            <img src="images/Asset 5.png" alt="우화살표" class="normal">
-            <img src="images/Asset 5hover.png" alt="우화살표_호버" class="on">
-        </a>
+        <a href="#" class="arrow-btn" data-step="-1">
+        <img src="images/Asset 4.png" class="normal" alt="">
+        <img src="images/Asset 4hover.png" class="on" alt=""></a>
+
+        <a href="#" class="arrow-btn" data-step="1">
+        <img src="images/Asset 5.png" class="normal" alt="">
+    <img src="images/Asset 5hover.png" class="on" alt=""></a>
     </div>
+
     </div>
+    <div class="popup-dim" id="popupDim" aria-hidden="true"></div>
+
+<div class="popup" id="popup" aria-hidden="true">
+  <button type="button" class="popup-close" id="popupClose" aria-label="닫기">×</button>
+  <img id="popupImg" alt="Details View">
+</div>
+
+
+
+
     <script>
-// ✅ wheel → 부모로 전달 (가로 넘김 유지)
-window.addEventListener("wheel", function(e){
-  e.preventDefault();
-  window.parent.postMessage({ type: "WHEEL", deltaY: e.deltaY }, "*");
-}, { passive: false });
+  const isFramed = window.parent && window.parent !== window;
 
-// ✅ 클릭(data-go) → 부모로 전달 (버튼 클릭 이동)
-document.addEventListener("click", function(e){
-  const a = e.target.closest("a[data-go]");
-  if (!a) return;
-  e.preventDefault();
-  window.parent.postMessage({ type: "GO", idx: a.dataset.go }, "*");
-});
-const isFramed = window.parent && window.parent !== window;
+  // ✅ 팝업 요소 (iframe → img)
+  const popup = document.getElementById("popup");
+  const popupDim = document.getElementById("popupDim");
+  const popupImg = document.getElementById("popupImg");   // ✅ 변경
+  const popupClose = document.getElementById("popupClose");
 
-window.addEventListener("wheel", function(e){
-  if (!isFramed) return;          // iframe 아닐 때는 그냥 둠
-  e.preventDefault();
-  window.parent.postMessage({ type: "WHEEL", deltaY: e.deltaY }, "*");
-}, { passive: false });
+  function isPopupOpen() {
+    return popup && popup.classList.contains("show");
+  }
 
-document.addEventListener("click", function(e){
-  const a = e.target.closest("a[data-go]");
-  if (!a) return;
-  e.preventDefault();
+  function openPopup(url) {
+    if (!popup || !popupDim || !popupImg || !url) return;
 
-  if (isFramed) window.parent.postMessage({ type: "GO", idx: a.dataset.go }, "*");
-  else console.log("GO:", a.dataset.go); // 단독 실행 시 확인용
-});
+    // ✅ JPG 로드
+    popupImg.src = url;
 
+    popup.classList.add("show");
+    popupDim.classList.add("show");
+
+    document.documentElement.classList.add("no-scroll");
+    document.body.classList.add("no-scroll");
+  }
+
+  function closePopup() {
+    if (!popup || !popupDim || !popupImg) return;
+
+    popup.classList.remove("show");
+    popupDim.classList.remove("show");
+
+    document.documentElement.classList.remove("no-scroll");
+    document.body.classList.remove("no-scroll");
+
+    // ✅ 이미지 비우기
+    popupImg.src = "";
+  }
+
+  if (popupClose) popupClose.addEventListener("click", closePopup);
+  if (popupDim) popupDim.addEventListener("click", closePopup);
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isPopupOpen()) closePopup();
+  });
+
+  // ✅ wheel → 부모로 전달 (팝업 열리면 넘김 방지)
+  window.addEventListener("wheel", (e) => {
+    if (!isFramed) return;
+    if (isPopupOpen()) return; // ✅ 팝업 열려있으면 페이지 넘김 막기
+    e.preventDefault();
+    window.parent.postMessage({ type: "WHEEL", deltaY: e.deltaY }, "*");
+  }, { passive: false });
+
+  // ✅ 클릭 처리
+  document.addEventListener("click", (e) => {
+    // 1) ✅ 팝업 버튼 우선 처리
+    const popBtn = e.target.closest("[data-popup]");
+    if (popBtn) {
+      e.preventDefault();
+      openPopup(popBtn.dataset.popup);
+      return;
+    }
+
+    // 2) STEP
+    const stepBtn = e.target.closest("a[data-step]");
+    if (stepBtn) {
+      e.preventDefault();
+      const step = Number(stepBtn.dataset.step);
+      if (!Number.isFinite(step)) return;
+      window.parent.postMessage({ type: "STEP", step }, "*");
+      return;
+    }
+
+    // 3) GO
+    const goBtn = e.target.closest("a[data-go]");
+    if (goBtn) {
+      e.preventDefault();
+      const idx = Number(goBtn.dataset.go);
+      if (!Number.isFinite(idx)) return;
+      window.parent.postMessage({ type: "GO", idx }, "*");
+      return;
+    }
+  });
 </script>
-
 </body>
 </html>

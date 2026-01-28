@@ -180,34 +180,52 @@ to   { transform: rotate(360deg); }
         <a href="#" data-go="1"><img src="images/port.png" alt="포트폴리오"></a>
         
         <div class="arrows">
-        <a href="sub2.html" class="arrow-btn">
-            <img src="images/Asset 4.png" alt="좌화살표" class="normal">
-            <img src="images/Asset 4hover.png" alt="좌화살표_호버" class="on">
-        </a>
-        <a href="sub4.html" class="arrow-btn">
-            <img src="images/Asset 5.png" alt="우화살표" class="normal">
-            <img src="images/Asset 5hover.png" alt="우화살표_호버" class="on">
-        </a>
+        <a href="#" class="arrow-btn" data-step="-1">
+        <img src="images/Asset 4.png" class="normal" alt="">
+        <img src="images/Asset 4hover.png" class="on" alt=""></a>
+
+        <a href="#" class="arrow-btn" data-step="1">
+        <img src="images/Asset 5.png" class="normal" alt="">
+    <img src="images/Asset 5hover.png" class="on" alt=""></a>
     </div>
+
     <div class="dot">
         <img src="images/원3.png" alt="세번째">
     </div>
     </div>
-    <script>
-// ✅ wheel → 부모로 전달 (가로 넘김 유지)
-window.addEventListener("wheel", function(e){
-  e.preventDefault();
-  window.parent.postMessage({ type: "WHEEL", deltaY: e.deltaY }, "*");
-}, { passive: false });
+   <script>
+  const isFramed = window.parent && window.parent !== window;
 
-// ✅ 클릭(data-go) → 부모로 전달 (버튼 클릭 이동)
-document.addEventListener("click", function(e){
-  const a = e.target.closest("a[data-go]");
-  if (!a) return;
-  e.preventDefault();
-  window.parent.postMessage({ type: "GO", idx: a.dataset.go }, "*");
-});
+  // ✅ wheel → 부모로 전달
+  window.addEventListener("wheel", (e) => {
+    if (!isFramed) return;
+    e.preventDefault();
+    window.parent.postMessage({ type: "WHEEL", deltaY: e.deltaY }, "*");
+  }, { passive: false });
+
+  // ✅ 클릭 → STEP/GO를 부모로 전달
+  document.addEventListener("click", (e) => {
+    const stepBtn = e.target.closest("a[data-step]");
+    if (stepBtn) {
+      e.preventDefault();
+      const step = Number(stepBtn.dataset.step);
+      if (!Number.isFinite(step)) return;
+      window.parent.postMessage({ type: "STEP", step }, "*");
+      return;
+    }
+
+    const goBtn = e.target.closest("a[data-go]");
+    if (goBtn) {
+      e.preventDefault();
+      const idx = Number(goBtn.dataset.go);
+      if (!Number.isFinite(idx)) return;
+      window.parent.postMessage({ type: "GO", idx }, "*");
+      return;
+    }
+  });
 </script>
+
+
 
 </body>
 </html>
