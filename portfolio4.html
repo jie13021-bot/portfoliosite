@@ -215,8 +215,8 @@
 .view-btn:first-child {
     position: relative;
     display: block;
-    width: 145px;
-    height: 38px;
+    width: 179px;
+    height: 39px;
 }
 .view-btn:last-child {
     position: relative;
@@ -277,40 +277,54 @@
     transition: opacity .18s ease, visibility .18s ease;
 }
 
-.popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(.98);
+.popup{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(.98);
 
-    width: min(1000px, calc(100vw - 64px));
-    height: min(780px, calc(100vh - 64px));
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 18px 60px rgba(0,0,0,.6);
 
-    background: #fff;
-    z-index: 9999;
+  overflow-x: hidden;
+  overflow-y: auto;                 /* ✅ 팝업 내부 세로 스크롤 */
+  overscroll-behavior: contain;     /* ✅ 팝업 끝에서 뒤로 튀지 않게 */
+  -webkit-overflow-scrolling: touch;
 
-    border-radius: 14px;
-    overflow-x: hidden;  
-    overflow-y: auto;   
+  height: min(92vh, 780px); /* ✅ 반드시 높이 있어야 스크롤 생김 */
+  overscroll-behavior: contain;
 
-    padding: 0;
-    pointer-events: auto;
-    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.6);
+  z-index: 9999;
 
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .18s ease, visibility .18s ease, transform .18s ease;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .18s ease, visibility .18s ease, transform .18s ease;
+}
+.popup.show{
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
 }
 
-.popup-dim.show {
-    opacity: 1;
-    visibility: visible;
-}
 
-.popup.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(-50%, -50%) scale(1);
+.popup-dim{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.65);
+  z-index: 9998;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .18s ease, visibility .18s ease;
+}
+.popup-dim.show{
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 /* ✅ iframe을 '진짜로' 팝업 내부에 꽉 채우기 */
@@ -332,9 +346,9 @@
     width: 44px;
     height: 44px;
 
-    background: transparent;
+    background: #fff;
     /* ✅ 정사각형 배경 제거 */
-    border: 0;
+    border:0;
     /* ✅ 테두리 제거 */
     border-radius: 0;
     /* ✅ 라운드 박스 제거 */
@@ -342,7 +356,7 @@
     /* ✅ 그림자 제거 */
 
     color: #111;
-    font-size: 28px;
+    font-size: 34px;
     line-height: 1;
     cursor: pointer;
 
@@ -356,6 +370,17 @@
 .popup-close:focus {
     outline: 2px solid rgba(0, 0, 0, 0.25);
     outline-offset: 2px;
+}
+
+.popup.size-event{
+  width: min(736px, calc(100vw - 64px));
+  height: min(92vh, 900px);
+}
+
+/* ✅ 디테일(1000x4032) */
+.popup.size-detail{
+  width: min(1000px, calc(100vw - 64px));
+  height: min(92vh, 900px);
 }
 
 #popupImg{
@@ -385,11 +410,15 @@
             <div class="light2"><img src="images/light2.png" alt="반짝임"></div>
         </div>
         <div class="view">
+            <a href="#" class="view-btn" data-popup="images/more04-1.jpg">
+            <h1>Event Page</h1>
+            <img class="normal" src="images/event.png" alt="이벤트페이지">
+            <img class="on" src="images/eventhover.png" alt="이벤트페이지"></a>
+            
             <a href="#" class="view-btn" data-popup="images/more04.jpg">
-  <h1>Details View</h1>
-  <img class="normal" src="images/view.png" alt="자세히보기">
-  <img class="on" src="images/viewhover.png" alt="자세히보기">
-</a>
+            <h1>Details View</h1>
+            <img class="normal" src="images/view.png" alt="자세히보기">
+            <img class="on" src="images/viewhover.png" alt="자세히보기"></a>
         </div>
     </div>
     <div class="navi">
@@ -431,18 +460,22 @@
     return popup && popup.classList.contains("show");
   }
 
-  function openPopup(url) {
-    if (!popup || !popupDim || !popupImg || !url) return;
+function openPopup(url, size) {
+  if (!popup || !popupDim || !popupImg || !url) return;
 
-    // ✅ JPG 로드
-    popupImg.src = url;
+  popupImg.src = url;
 
-    popup.classList.add("show");
-    popupDim.classList.add("show");
+  popup.classList.remove("size-event", "size-detail");
+  if (size === "event") popup.classList.add("size-event");
+  if (size === "detail") popup.classList.add("size-detail");
 
-    document.documentElement.classList.add("no-scroll");
-    document.body.classList.add("no-scroll");
-  }
+  popup.classList.add("show");
+  popupDim.classList.add("show");
+
+  document.documentElement.classList.add("no-scroll");
+  document.body.classList.add("no-scroll");
+}
+
 
   function closePopup() {
     if (!popup || !popupDim || !popupImg) return;
@@ -465,12 +498,26 @@
   });
 
   // ✅ wheel → 부모로 전달 (팝업 열리면 넘김 방지)
-  window.addEventListener("wheel", (e) => {
-    if (!isFramed) return;
-    if (isPopupOpen()) return; // ✅ 팝업 열려있으면 페이지 넘김 막기
-    e.preventDefault();
-    window.parent.postMessage({ type: "WHEEL", deltaY: e.deltaY }, "*");
-  }, { passive: false });
+window.addEventListener("wheel", (e) => {
+  if (!isFramed) return;
+
+  // ✅ 팝업이 열려있으면:
+  // - 팝업 내부에서 휠: 팝업이 스크롤을 먹도록 그냥 둠
+  // - 팝업 바깥(딤)에서 휠: 페이지 넘김/스크롤 모두 막음
+  if (isPopupOpen()) {
+    if (popup && popup.contains(e.target)) {
+      return; // ✅ 스크롤 허용 (preventDefault 절대 X)
+    }
+    e.preventDefault(); // ✅ 딤에서 휠은 막기
+    return;
+  }
+
+  // ✅ 팝업이 닫혀있을 때만 부모로 넘겨서 페이지 이동
+  e.preventDefault();
+  window.parent.postMessage({ type: "WHEEL", deltaY: e.deltaY }, "*");
+}, { passive: false });
+
+
 
   // ✅ 클릭 처리
   document.addEventListener("click", (e) => {
